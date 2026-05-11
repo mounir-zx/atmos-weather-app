@@ -1,0 +1,16 @@
+{
+  "name": "Atmos - Worldwide Weather",
+  "short_name": "Atmos",
+  "description": "Modern worldwide weather app with city search, live conditions, and 7-day forecast.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#08111f",
+  "theme_color": "#67e8f9",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌤️</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -1,7 +1,9 @@
 ﻿const searchForm = document.getElementById("search-form");
 const cityInput = document.getElementById("city-input");
 const locationBtn = document.getElementById("location-btn");
+const refreshBtn = document.getElementById("refresh-btn");
 const statusText = document.getElementById("status-text");
+const loadingSpinner = document.getElementById("loading-spinner");
 const forecastGrid = document.getElementById("forecast-grid");
 const forecastTemplate = document.getElementById("forecast-template");
 const unitButtons = document.querySelectorAll(".unit-btn");
@@ -28,34 +30,34 @@ let currentUnit = "celsius";
 let activeLocation = null;
 
 const weatherCodeMap = {
-  0: { label: "Clear sky", icon: "Sun", symbol: "01", theme: "theme-clear" },
-  1: { label: "Mostly clear", icon: "Glow", symbol: "02", theme: "theme-clear" },
-  2: { label: "Partly cloudy", icon: "Mix", symbol: "03", theme: "theme-cloudy" },
-  3: { label: "Overcast", icon: "Cloud", symbol: "04", theme: "theme-cloudy" },
-  45: { label: "Fog", icon: "Mist", symbol: "05", theme: "theme-cloudy" },
-  48: { label: "Rime fog", icon: "Mist", symbol: "05", theme: "theme-cloudy" },
-  51: { label: "Light drizzle", icon: "Drizzle", symbol: "06", theme: "theme-rain" },
-  53: { label: "Drizzle", icon: "Drizzle", symbol: "06", theme: "theme-rain" },
-  55: { label: "Heavy drizzle", icon: "Rain", symbol: "07", theme: "theme-rain" },
-  56: { label: "Freezing drizzle", icon: "Rain", symbol: "07", theme: "theme-rain" },
-  57: { label: "Dense freezing drizzle", icon: "Rain", symbol: "07", theme: "theme-rain" },
-  61: { label: "Slight rain", icon: "Rain", symbol: "07", theme: "theme-rain" },
-  63: { label: "Rain", icon: "Rain", symbol: "07", theme: "theme-rain" },
-  65: { label: "Heavy rain", icon: "Storm", symbol: "08", theme: "theme-rain" },
-  66: { label: "Freezing rain", icon: "Rain", symbol: "07", theme: "theme-rain" },
-  67: { label: "Heavy freezing rain", icon: "Storm", symbol: "08", theme: "theme-rain" },
-  71: { label: "Slight snow", icon: "Snow", symbol: "09", theme: "theme-cloudy" },
-  73: { label: "Snow", icon: "Snow", symbol: "09", theme: "theme-cloudy" },
-  75: { label: "Heavy snow", icon: "Snow", symbol: "09", theme: "theme-cloudy" },
-  77: { label: "Snow grains", icon: "Snow", symbol: "09", theme: "theme-cloudy" },
-  80: { label: "Rain showers", icon: "Showers", symbol: "10", theme: "theme-rain" },
-  81: { label: "Rain showers", icon: "Showers", symbol: "10", theme: "theme-rain" },
-  82: { label: "Violent showers", icon: "Storm", symbol: "08", theme: "theme-rain" },
-  85: { label: "Snow showers", icon: "Snow", symbol: "09", theme: "theme-cloudy" },
-  86: { label: "Heavy snow showers", icon: "Snow", symbol: "09", theme: "theme-cloudy" },
-  95: { label: "Thunderstorm", icon: "Storm", symbol: "08", theme: "theme-rain" },
-  96: { label: "Thunder with hail", icon: "Storm", symbol: "08", theme: "theme-rain" },
-  99: { label: "Strong hailstorm", icon: "Storm", symbol: "08", theme: "theme-rain" }
+  0: { label: "Clear sky", icon: "☀️", symbol: "01", theme: "theme-clear" },
+  1: { label: "Mostly clear", icon: "🌤️", symbol: "02", theme: "theme-clear" },
+  2: { label: "Partly cloudy", icon: "⛅", symbol: "03", theme: "theme-cloudy" },
+  3: { label: "Overcast", icon: "☁️", symbol: "04", theme: "theme-cloudy" },
+  45: { label: "Fog", icon: "🌫️", symbol: "05", theme: "theme-cloudy" },
+  48: { label: "Rime fog", icon: "🌫️", symbol: "05", theme: "theme-cloudy" },
+  51: { label: "Light drizzle", icon: "🌦️", symbol: "06", theme: "theme-rain" },
+  53: { label: "Drizzle", icon: "🌦️", symbol: "06", theme: "theme-rain" },
+  55: { label: "Heavy drizzle", icon: "🌧️", symbol: "07", theme: "theme-rain" },
+  56: { label: "Freezing drizzle", icon: "🌧️", symbol: "07", theme: "theme-rain" },
+  57: { label: "Dense freezing drizzle", icon: "🌧️", symbol: "07", theme: "theme-rain" },
+  61: { label: "Slight rain", icon: "🌦️", symbol: "07", theme: "theme-rain" },
+  63: { label: "Rain", icon: "🌧️", symbol: "07", theme: "theme-rain" },
+  65: { label: "Heavy rain", icon: "🌧️", symbol: "08", theme: "theme-rain" },
+  66: { label: "Freezing rain", icon: "🌧️", symbol: "07", theme: "theme-rain" },
+  67: { label: "Heavy freezing rain", icon: "🌧️", symbol: "08", theme: "theme-rain" },
+  71: { label: "Slight snow", icon: "🌨️", symbol: "09", theme: "theme-cloudy" },
+  73: { label: "Snow", icon: "❄️", symbol: "09", theme: "theme-cloudy" },
+  75: { label: "Heavy snow", icon: "❄️", symbol: "09", theme: "theme-cloudy" },
+  77: { label: "Snow grains", icon: "❄️", symbol: "09", theme: "theme-cloudy" },
+  80: { label: "Rain showers", icon: "🌦️", symbol: "10", theme: "theme-rain" },
+  81: { label: "Rain showers", icon: "🌦️", symbol: "10", theme: "theme-rain" },
+  82: { label: "Violent showers", icon: "🌧️", symbol: "08", theme: "theme-rain" },
+  85: { label: "Snow showers", icon: "🌨️", symbol: "09", theme: "theme-cloudy" },
+  86: { label: "Heavy snow showers", icon: "❄️", symbol: "09", theme: "theme-cloudy" },
+  95: { label: "Thunderstorm", icon: "⛈️", symbol: "08", theme: "theme-rain" },
+  96: { label: "Thunder with hail", icon: "⛈️", symbol: "08", theme: "theme-rain" },
+  99: { label: "Strong hailstorm", icon: "⛈️", symbol: "08", theme: "theme-rain" }
 };
 
 function setStatus(message) {
@@ -68,14 +70,16 @@ function setLoadingState(isLoading) {
     button.disabled = isLoading;
     button.style.opacity = isLoading ? "0.7" : "1";
   });
+  loadingSpinner.style.display = isLoading ? "flex" : "none";
+  refreshBtn.style.display = activeLocation ? "inline-block" : "none";
 }
 
 function getWeatherInfo(code, isDay = 1) {
-  const fallback = { label: "Weather update", icon: "Now", symbol: "--", theme: "theme-cloudy" };
+  const fallback = { label: "Weather update", icon: "🌤️", symbol: "--", theme: "theme-cloudy" };
   const info = weatherCodeMap[code] || fallback;
 
   if (!isDay && (code === 0 || code === 1)) {
-    return { label: "Clear night", icon: "Moon", symbol: "00", theme: "theme-night" };
+    return { label: "Clear night", icon: "🌙", symbol: "00", theme: "theme-night" };
   }
 
   return info;
@@ -131,7 +135,7 @@ function renderForecast(daily, unitSymbol) {
     node.querySelector(".forecast-day").textContent = new Intl.DateTimeFormat([], {
       weekday: "short"
     }).format(new Date(date));
-    node.querySelector(".forecast-icon").textContent = weatherInfo.symbol;
+    node.querySelector(".forecast-icon").textContent = weatherInfo.icon;
     node.querySelector(".forecast-desc").textContent = weatherInfo.label;
     node.querySelector(".forecast-max").textContent = `${Math.round(daily.temperature_2m_max[index])}${unitSymbol}`;
     node.querySelector(".forecast-min").textContent = `${Math.round(daily.temperature_2m_min[index])}${unitSymbol}`;
@@ -307,6 +311,20 @@ locationBtn.addEventListener("click", () => {
   );
 });
 
+refreshBtn.addEventListener("click", () => {
+  if (activeLocation) {
+    setLoadingState(true);
+    setStatus(`Refreshing weather for ${activeLocation.label}...`);
+    fetchWeather(activeLocation.latitude, activeLocation.longitude, activeLocation.label)
+      .catch((error) => {
+        setStatus(error.message || "Unable to refresh weather right now.");
+      })
+      .finally(() => {
+        setLoadingState(false);
+      });
+  }
+});
+
 unitButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const nextUnit = button.dataset.unit;
@@ -332,3 +350,16 @@ unitButtons.forEach((button) => {
 });
 
 loadWeatherByQuery("Algiers");
+
+// Register service worker for PWA
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then((registration) => {
+        console.log('ServiceWorker registration successful');
+      })
+      .catch((error) => {
+        console.log('ServiceWorker registration failed');
+      });
+  });
+}

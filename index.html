@@ -8,12 +8,8 @@
     name="description"
     content="Modern worldwide weather app with city search, live conditions, and a 7-day forecast."
   >
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Manrope:wght@400;500;700;800&display=swap"
-    rel="stylesheet"
-  >
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌤️</text></svg>">
+  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -55,7 +51,12 @@
         </form>
 
         <div class="status-row">
-          <p class="status-text" id="status-text">Loading current weather...</p>
+          <p class="status-text" id="status-text" aria-live="polite">Loading current weather...</p>
+          <button class="ghost-btn" id="refresh-btn" type="button" style="display: none;">Refresh</button>
+        </div>
+
+        <div class="loading-spinner" id="loading-spinner" style="display: none;">
+          <div class="spinner"></div>
         </div>
       </section>
 

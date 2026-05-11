@@ -7,11 +7,14 @@ A modern, responsive weather application that provides real-time weather informa
 - **City Search**: Search for weather in any city, country, or region
 - **Location-Based Weather**: Use your current location for instant weather updates
 - **Current Conditions**: Live temperature, humidity, wind speed, precipitation, and more
-- **7-Day Forecast**: Detailed weather predictions for the upcoming week
+- **7-Day Forecast**: Detailed weather predictions for the upcoming week with emoji icons
 - **Unit Toggle**: Switch between Celsius and Fahrenheit
 - **Comfort Outlook**: Personalized comfort assessment based on current conditions
+- **Refresh Functionality**: Manual refresh button for updated data
+- **Loading Indicators**: Visual feedback during data loading
 - **Responsive Design**: Optimized for desktop and mobile devices
-- **Dark Theme**: Modern dark UI with glassmorphism effects
+- **Progressive Web App**: Installable as a PWA with offline capabilities
+- **Dark Theme**: Modern dark UI with glassmorphism effects and dynamic theming
 
 ## 📸 Screenshots
 
@@ -36,7 +39,12 @@ A modern, responsive weather application that provides real-time weather informa
    cd atmos-weather-app
    ```
 
-3. Open `index.html` in your web browser or serve it with a local server.
+### PWA Installation
+
+This app can be installed as a Progressive Web App:
+1. Open the app in a supported browser (Chrome, Edge, Safari)
+2. Click the install icon in the address bar or use the "Add to Home Screen" option
+3. The app will be available offline with cached data
 
 ### Usage
 
@@ -52,6 +60,7 @@ A modern, responsive weather application that provides real-time weather informa
 - **JavaScript (ES6+)**: DOM manipulation, async/await, and API integration
 - **Open-Meteo API**: Free weather and geocoding services
 - **Google Fonts**: Space Grotesk and Manrope font families
+- **PWA Features**: Web App Manifest and service worker for offline functionality
 
 ## 📡 APIs
 
