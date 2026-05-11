@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atmos Worldwide Weather</title>
+  <meta
+    name="description"
+    content="Modern worldwide weather app with city search, live conditions, and a 7-day forecast."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Manrope:wght@400;500;700;800&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-shell">
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <main class="app">
+      <section class="hero-card glass">
+        <div class="hero-top">
+          <div>
+            <p class="eyebrow">Worldwide Weather</p>
+            <h1>Atmos</h1>
+            <p class="hero-copy">
+              Search any city, use your location, and track live weather with a refined forecast experience.
+            </p>
+          </div>
+
+          <div class="unit-toggle" aria-label="Temperature unit switch">
+            <button class="unit-btn is-active" data-unit="celsius" type="button">C</button>
+            <button class="unit-btn" data-unit="fahrenheit" type="button">F</button>
+          </div>
+        </div>
+
+        <form class="search-panel" id="search-form">
+          <label class="search-field" for="city-input">
+            <span class="search-icon">+</span>
+            <input
+              id="city-input"
+              name="city"
+              type="text"
+              placeholder="Search city, country, or region"
+              autocomplete="off"
+              required
+            >
+          </label>
+          <button class="primary-btn" type="submit">Search</button>
+          <button class="ghost-btn" type="button" id="location-btn">Use My Location</button>
+        </form>
+
+        <div class="status-row">
+          <p class="status-text" id="status-text">Loading current weather...</p>
+        </div>
+      </section>
+
+      <section class="overview-grid">
+        <article class="current-card glass">
+          <div class="current-header">
+            <div>
+              <p class="section-label">Current Conditions</p>
+              <h2 id="place-name">Loading...</h2>
+              <p class="local-time" id="local-time">--</p>
+            </div>
+            <div class="weather-badge" id="weather-badge">--</div>
+          </div>
+
+          <div class="temperature-row">
+            <div class="temperature-main">
+              <span class="temperature-value" id="temperature-value">--</span>
+              <span class="temperature-unit" id="temperature-unit">&deg;C</span>
+            </div>
+            <div class="temperature-meta">
+              <p id="weather-description">Waiting for data</p>
+              <p id="feels-like">Feels like --</p>
+            </div>
+          </div>
+
+          <div class="metrics-grid">
+            <div class="metric">
+              <span>Wind</span>
+              <strong id="wind-value">--</strong>
+            </div>
+            <div class="metric">
+              <span>Humidity</span>
+              <strong id="humidity-value">--</strong>
+            </div>
+            <div class="metric">
+              <span>Precipitation</span>
+              <strong id="precipitation-value">--</strong>
+            </div>
+            <div class="metric">
+              <span>Day / Night</span>
+              <strong id="day-night-value">--</strong>
+            </div>
+          </div>
+        </article>
+
+        <article class="highlight-card glass">
+          <div class="highlight-header">
+            <div>
+              <p class="section-label">Today at a Glance</p>
+              <h3>Comfort Outlook</h3>
+            </div>
+            <div class="highlight-pill" id="comfort-pill">Balanced</div>
+          </div>
+
+          <div class="highlight-content">
+            <p id="highlight-summary">
+              Pulling together a quick snapshot of today&apos;s conditions.
+            </p>
+
+            <div class="sun-grid">
+              <div>
+                <span>Sunrise</span>
+                <strong id="sunrise-value">--</strong>
+              </div>
+              <div>
+                <span>Sunset</span>
+                <strong id="sunset-value">--</strong>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="forecast-card glass">
+        <div class="forecast-header">
+          <div>
+            <p class="section-label">7-Day Forecast</p>
+            <h3>Next days</h3>
+          </div>
+        </div>
+        <div class="forecast-grid" id="forecast-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <template id="forecast-template">
+    <article class="forecast-item">
+      <p class="forecast-day"></p>
+      <div class="forecast-icon"></div>
+      <p class="forecast-desc"></p>
+      <div class="forecast-temps">
+        <strong class="forecast-max"></strong>
+        <span class="forecast-min"></span>
+      </div>
+    </article>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
